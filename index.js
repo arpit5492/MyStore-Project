@@ -16,7 +16,7 @@ app.use(express.static("css"));
 app.use(express.static("assets"));
 app.use(morgan("dev"));
 app.use("/", home);
-app.use("/prod/", addProd);
+app.use("/", addProd);
 
 app.listen(port, () => {
     console.log(`Server is running on: http://localhost:${port}`);
