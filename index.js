@@ -1,7 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import router from "./services/home.js";
+import home from "./services/home.js";
+import addProd from "./services/addProd.js";
 
 dotenv.config();
 
@@ -14,7 +15,8 @@ app.set("views", "views");
 app.use(express.static("css"));
 app.use(express.static("assets"));
 app.use(morgan("dev"));
-app.use("/", router);
+app.use("/", home);
+app.use("/prod/", addProd);
 
 app.listen(port, () => {
     console.log(`Server is running on: http://localhost:${port}`);
