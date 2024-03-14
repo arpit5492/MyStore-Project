@@ -3,6 +3,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
+import editProd from "./services/editProd.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.static("assets"));
 app.use(morgan("dev"));
 app.use("/", home);
 app.use("/", addProd);
+app.use("/", editProd);
 
 app.listen(port, () => {
     console.log(`Server is running on: http://localhost:${port}`);
