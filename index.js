@@ -12,6 +12,7 @@ const port = process.env.PORT;
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static("css"));
+app.use(express.static("assets"));
 app.use(morgan("dev"));
 app.use("/", router);
 
