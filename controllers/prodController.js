@@ -13,7 +13,7 @@ const editProds = async (req, res) => {
 };
 
 const updateEachProd = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const {prod_name, price, image} = req.body;
     const id = req.params.id;
     // console.log(id, prod_name, price, image);
