@@ -8,8 +8,8 @@ const getAllProds = async (req, res) => {
 
 const editProds = async (req, res) => {
     const products = await fetchProducts();
-    // console.log(products[req.params.id-1]);
-    res.render("editProd", {title: "Edit Product", prod: products[req.params.id-1]});
+    // console.log(products.length-1);
+    res.render("editProd", {title: "Edit Product", prod: products[products.length-1]});
 };
 
 const updateEachProd = async (req, res) => {
