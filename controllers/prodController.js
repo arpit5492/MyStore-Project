@@ -1,26 +1,31 @@
-const products = [
-    {
-        id: 1,
-        pName: "Apples",
-        price: 1.32,
-        image: "apple.jpg"
-    },
-    {
-        id: 2,
-        pName: "Oranges",
-        price: 2.43,
-        image: "oranges.jpeg"
-    },
-    {
-        id: 3,
-        pName: "Grapes",
-        price: 1.21,
-        image: "grapes.jpeg"
-    }
-];
+import Products from "../db/product.js";
+
+// const products = [
+//     {
+//         id: 1,
+//         pName: "Apples",
+//         price: 1.32,
+//         image: "apple.jpg"
+//     },
+//     {
+//         id: 2,
+//         pName: "Oranges",
+//         price: 2.43,
+//         image: "oranges.jpeg"
+//     },
+//     {
+//         id: 3,
+//         pName: "Grapes",
+//         price: 1.21,
+//         image: "grapes.jpeg"
+//     }
+// ];
 
 const getAllProds = (req, res) => {
-    res.render("home", {title: "Home", products: products});
+    Products.fetchProducts()
+        .then(([rows, fieldData]) => {
+            res.render("home", {title: "Home", products: rows});
+        });
 };
 
 const editProds = (req, res) => {
