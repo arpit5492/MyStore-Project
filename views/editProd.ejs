@@ -11,7 +11,7 @@
 <body>
     <%- include("./partials/navbar.ejs") %>
     <div class="container-fluid mt-5 form-container">
-        <form class="w-35 shadow-lg p-3" action="/addProd" method="post">
+        <form class="w-35 shadow-lg p-3" action=<%= "/editProd/" + prod.id %> method="post">
             <h2>Edit Product</h2>
             <div class="form-control">
                 <div class="row">
