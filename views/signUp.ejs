@@ -12,7 +12,7 @@
 <body>
     <%- include("./partials/navbar.ejs") %>
     <div class="container-fluid mt-5 form-container">
-        <form class="w-lg-25 shadow-lg p-3" action="/signUp" method="post">
+        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass()" action="/signUp" method="post">
             <h2>Sign Up</h2>
             <div class="form-control">
                 <div class="row">
@@ -64,6 +64,7 @@
                         </i>
                     </div>
                 </div>
+                <div id="helper-text" class="text-danger"></div>
                 
             </div>
 
@@ -99,6 +100,19 @@
                     e.setAttribute("name", "confPassHidden");
             }
         }
+
+        const validatePass = () => {
+            if(passInp.value === confPassInp.value){
+                document.getElementById("helper-text").innerHTML = "";
+                return true;
+            } else {
+                document.getElementById("helper-text").innerHTML = "Passwords does not match";
+                return false;
+            }
+        }
+
+        passInp.addEventListener("input", validatePass);
+        confPassInp.addEventListener("input", validatePass);
     </script>
 </body>
 </html>
