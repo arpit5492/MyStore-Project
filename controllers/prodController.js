@@ -1,26 +1,5 @@
 import {fetchProducts, postData} from "../db/product.js";
 
-// const products = [
-//     {
-//         id: 1,
-//         pName: "Apples",
-//         price: 1.32,
-//         image: "apple.jpg"
-//     },
-//     {
-//         id: 2,
-//         pName: "Oranges",
-//         price: 2.43,
-//         image: "oranges.jpeg"
-//     },
-//     {
-//         id: 3,
-//         pName: "Grapes",
-//         price: 1.21,
-//         image: "grapes.jpeg"
-//     }
-// ];
-
 // getting all the products
 const getAllProds = async (req, res) => {
     const products = await fetchProducts();
