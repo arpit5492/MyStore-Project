@@ -12,7 +12,7 @@
 <body>
     <%- include("./partials/navbar.ejs") %>
     <div class="container-fluid mt-5 form-container">
-        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass(event)" action="/login" method="post">
+        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass()" action="/login" method="post">
             <h2>Login</h2>
             <div class="form-control">
                 <div class="row">
@@ -23,6 +23,7 @@
                             class="form-control" 
                             name="username"
                             placeholder="name@example.com"
+                            required="true"
                         >
                     </div>
                 </div>
@@ -72,19 +73,17 @@
             }
         }
 
-        const validatePass = (e) => {
+        const validatePass = () => {
             if(passInp.value === confPassInp.value){
                 document.getElementById("helper-text").innerHTML = "";
                 return true;
             } else {
                 document.getElementById("helper-text").innerHTML = "Passwords does not match";
-                e.preventDefault();
                 return false;
             }
         }
 
         passInp.addEventListener("input", validatePass);
-        confPassInp.addEventListener("input", validatePass);
     </script>
 </body>
 </html>
