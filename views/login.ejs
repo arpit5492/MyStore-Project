@@ -12,7 +12,7 @@
 <body>
     <%- include("./partials/navbar.ejs") %>
     <div class="container-fluid mt-5 form-container">
-        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass(event)" action="/signUp" method="post">
+        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass(event)" action="/login" method="post">
             <h2>Login</h2>
             <div class="form-control">
                 <div class="row">
@@ -49,12 +49,11 @@
                 
             </div>
 
-            <button class="btn btn-primary fs-5 w-100 mt-3" type="submit">Sign Up</button>
+            <button class="btn btn-primary fs-5 w-100 mt-3" type="submit">Login</button>
         </form>
     </div>
     <script>
         let passInp = document.getElementById("passInp");
-        let confPassInp = document.getElementById("confPassInp");
 
         const toggleDisplay = (e) => {
             let selected = e.getAttribute("name");
@@ -70,15 +69,6 @@
                     e.className = "bi bi-eye-slash";
                     e.setAttribute("name", "passHidden");
                     break;
-                case "confPassHidden":
-                    confPassInp.type = "text";
-                    e.className = "bi bi-eye";
-                    e.setAttribute("name", "confPassVisible");
-                    break;
-                case "confPassVisible":
-                    confPassInp.type = "password";
-                    e.className = "bi bi-eye-slash";
-                    e.setAttribute("name", "confPassHidden");
             }
         }
 

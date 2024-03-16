@@ -11,4 +11,16 @@ const updateUser = async (username, password) => {
     }
 }
 
-export {updateUser};
+const fetchDet = async (username) => {
+    try{
+        const [rows, fields] = await pool.query(
+            "select * from users where username = ?",
+            [username]
+        );
+        return rows;
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+export {updateUser, fetchDet};
