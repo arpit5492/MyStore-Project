@@ -12,14 +12,14 @@
 <body>
     <%- include("./partials/navbar.ejs") %>
     <div class="container-fluid mt-5 form-container">
-        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass()" action="/signUp" method="post">
+        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass(event)" action="/signUp" method="post">
             <h2>Sign Up</h2>
             <div class="form-control">
                 <div class="row">
                     <div class="col-12">
                         <label class="form-label fw-bold fs-5 my-3">Username <span class="fs-6 text-secondary fst-italic">(Email)</span></label>
                         <input 
-                            type="text" 
+                            type="email" 
                             class="form-control" 
                             name="username"
                             placeholder="name@example.com"
@@ -101,12 +101,13 @@
             }
         }
 
-        const validatePass = () => {
+        const validatePass = (e) => {
             if(passInp.value === confPassInp.value){
                 document.getElementById("helper-text").innerHTML = "";
                 return true;
             } else {
                 document.getElementById("helper-text").innerHTML = "Passwords does not match";
+                e.preventDefault();
                 return false;
             }
         }
