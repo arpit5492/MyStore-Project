@@ -18,4 +18,8 @@ const addUser = async (req, res) => {
 
 }
 
-export {signUpRender, addUser};
+const renderLogin = (req, res) => {
+    res.render("login", {title: "Login"});
+}
+
+export {signUpRender, addUser, renderLogin};
