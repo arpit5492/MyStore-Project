@@ -1,10 +1,12 @@
 import { updateUser, fetchDet } from "../db/user.js";
+import JWT from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const signUpRender = (req, res) => {
-
-    const cookie = req.session.isLoggedIn;
     // console.log(cookie);
-    res.render("signUp", {title: "Sign Up", isLoggedIn: cookie});
+    res.render("signUp", {title: "Sign Up", isLoggedIn: global.isLoggedIn});
 }
 
 const addUser = async (req, res) => {
@@ -14,7 +16,7 @@ const addUser = async (req, res) => {
 
     try{
         await updateUser(username, password); 
-        req.session.isLoggedIn = "true";
+        global.isLoggedIn = "true";
         res.redirect("/");
     } catch(err) {
         console.log(err);
@@ -22,9 +24,8 @@ const addUser = async (req, res) => {
 };
 
 const renderLogin = (req, res) => {
-    const cookie = req.session.isLoggedIn;
     // console.log(cookie);
-    res.render("login", {title: "Login", isLoggedIn: cookie});
+    res.render("login", {title: "Login", isLoggedIn: global.isLoggedIn});
 };
 
 const postLogin = async (req, res) => {
@@ -34,14 +35,16 @@ const postLogin = async (req, res) => {
         const [userDet] = await fetchDet(username);
         if(userDet){
             if(userDet.password === password){
-                req.session.isLoggedIn = "true";
+                const token = JWT.sign(
+                    {username},
+                    process.env.tokenSignature
+                )
+                req.session.token = token;
                 res.redirect("/");
             } else {
-                req.session.isLoggedIn = "InvalidPassword";
                 res.redirect("/login");
             }
         } else {
-            req.session.isLoggedIn = "InvalidUsername";
             res.redirect("/login");
         }
     } catch(err) {
