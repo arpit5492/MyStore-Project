@@ -3,7 +3,7 @@ import { updateUser, fetchDet } from "../db/user.js";
 const signUpRender = (req, res) => {
 
     const cookie = req.session.isLoggedIn;
-    console.log(cookie);
+    // console.log(cookie);
     res.render("signUp", {title: "Sign Up", isLoggedIn: cookie});
 }
 
@@ -23,7 +23,7 @@ const addUser = async (req, res) => {
 
 const renderLogin = (req, res) => {
     const cookie = req.session.isLoggedIn;
-    console.log(cookie);
+    // console.log(cookie);
     res.render("login", {title: "Login", isLoggedIn: cookie});
 };
 

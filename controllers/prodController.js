@@ -4,7 +4,7 @@ import {fetchProducts, postData, updateData, delData} from "../db/product.js";
 const getAllProds = async (req, res) => {
 
     const cookie = req.session.isLoggedIn;
-    console.log(cookie);
+    // console.log(cookie);
     const products = await fetchProducts();
     res.render("home", {title: "Home", products: products, isLoggedIn: cookie});
 };
@@ -13,7 +13,7 @@ const editProds = async (req, res) => {
     const [products] = await fetchProducts();
     // console.log(products);
     const cookie = req.session.isLoggedIn;
-    console.log(cookie);
+    // console.log(cookie);
     res.render("editProd", {title: "Edit Product", prod: products, isLoggedIn: cookie});
 };
 
@@ -32,7 +32,7 @@ const updateEachProd = async (req, res) => {
 
 const renderAddProd = (req, res) => {
     const cookie = req.session.isLoggedIn;
-    console.log(cookie);
+    // console.log(cookie);
     res.render("addProd", {title: "Add Product", isLoggedIn: cookie});
 };
 
