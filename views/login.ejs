@@ -12,8 +12,8 @@
 <body>
     <%- include("./partials/navbar.ejs"), {isLoggedIn: isLoggedIn} %>
     <div class="container-fluid mt-5 form-container">
-        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass(event)" action="/signUp" method="post">
-            <h2>Sign Up</h2>
+        <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass()" action="/login" method="post">
+            <h2>Login</h2>
             <div class="form-control">
                 <div class="row">
                     <div class="col-12">
@@ -35,7 +35,7 @@
                             class="form-control" 
                             name="password"
                             placeholder="Password"
-                            id="passInp"                            
+                            id="passInp"
                         >
                     </div>
                     <div class="col-2 mt-2 mb-3 btn">
@@ -46,35 +46,15 @@
                         ></i>
                     </div>
                 </div>
-                <div class="row">
-                    <label class="form-label fw-bold fs-5 my-3">Confirm Password</label>
-                    <div class="col-10 mt-2 mb-3">
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            name="conf_pass"
-                            placeholder="Confirm Password"
-                            id="confPassInp"
-                        >
-                    </div>
-                    <div class="col-2 mt-2 mb-3 btn">
-                        <i 
-                        class="bi bi-eye-slash"
-                        name="confPassHidden"
-                        onclick="toggleDisplay(this)">
-                        </i>
-                    </div>
-                </div>
                 <div id="helper-text" class="text-danger"></div>
                 
             </div>
 
-            <button class="btn btn-primary fs-5 w-100 mt-3" type="submit">Sign Up</button>
+            <button class="btn btn-primary fs-5 w-100 mt-3" type="submit">Login</button>
         </form>
     </div>
     <script>
         let passInp = document.getElementById("passInp");
-        let confPassInp = document.getElementById("confPassInp");
 
         const toggleDisplay = (e) => {
             let selected = e.getAttribute("name");
@@ -90,31 +70,20 @@
                     e.className = "bi bi-eye-slash";
                     e.setAttribute("name", "passHidden");
                     break;
-                case "confPassHidden":
-                    confPassInp.type = "text";
-                    e.className = "bi bi-eye";
-                    e.setAttribute("name", "confPassVisible");
-                    break;
-                case "confPassVisible":
-                    confPassInp.type = "password";
-                    e.className = "bi bi-eye-slash";
-                    e.setAttribute("name", "confPassHidden");
             }
         }
 
-        const validatePass = (e) => {
+        const validatePass = () => {
             if(passInp.value === confPassInp.value){
                 document.getElementById("helper-text").innerHTML = "";
                 return true;
             } else {
                 document.getElementById("helper-text").innerHTML = "Passwords does not match";
-                e.preventDefault();
                 return false;
             }
         }
 
         passInp.addEventListener("input", validatePass);
-        confPassInp.addEventListener("input", validatePass);
     </script>
 </body>
 </html>

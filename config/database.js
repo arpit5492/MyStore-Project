@@ -16,7 +16,7 @@ pool.getConnection((err, connection) => {
     if(err){
         console.log(err);
     } else {
-        console.log("Connection established");
+        console.log("Database connected");
     }
 });
 
