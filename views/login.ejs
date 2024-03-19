@@ -10,7 +10,7 @@
     <title><%= title %></title>
 </head>
 <body>
-    <%- include("./partials/navbar.ejs") %>
+    <%- include("./partials/navbar.ejs"), {isLoggedIn: isLoggedIn} %>
     <div class="container-fluid mt-5 form-container">
         <form class="w-lg-25 shadow-lg p-3" onsubmit="validatePass()" action="/login" method="post">
             <h2>Login</h2>

@@ -2,14 +2,19 @@ import {fetchProducts, postData, updateData, delData} from "../db/product.js";
 
 // getting all the products
 const getAllProds = async (req, res) => {
+
+    const cookie = req.cookies;
+    console.log(cookie);
     const products = await fetchProducts();
-    res.render("home", {title: "Home", products: products});
+    res.render("home", {title: "Home", products: products, isLoggedIn: cookie.isLoggedIn});
 };
 
 const editProds = async (req, res) => {
-    const products = await fetchProducts();
-    // console.log(products.length-1);
-    res.render("editProd", {title: "Edit Product", prod: products[products.length-1]});
+    const [products] = await fetchProducts();
+    // console.log(products);
+    const cookie = req.cookies;
+    console.log(cookie);
+    res.render("editProd", {title: "Edit Product", prod: products, isLoggedIn: cookie.isLoggedIn});
 };
 
 const updateEachProd = async (req, res) => {
@@ -23,10 +28,12 @@ const updateEachProd = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const renderAddProd = (req, res) => {
-    res.render("addProd", {title: "Add Product"});
+    const cookie = req.cookies;
+    console.log(cookie);
+    res.render("addProd", {title: "Add Product", isLoggedIn: cookie.isLoggedIn});
 };
 
 const postAddProd = async (req, res) => {
@@ -38,7 +45,7 @@ const postAddProd = async (req, res) => {
     } catch(err) {
         console.log(err);
     }
-}
+};
 
 const delProd = async (req, res) => {
     const id = req.params.id;
@@ -48,6 +55,6 @@ const delProd = async (req, res) => {
     } catch(err) {
         console.log(err);
     }
-}
+};
 
 export {getAllProds, editProds, renderAddProd, postAddProd, updateEachProd, delProd};

@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import session from "express-session";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
 import editProd from "./services/editProd.js";
@@ -14,6 +15,16 @@ const app = express();
 const port = process.env.PORT;
 
 //Middleware functions
+app.use(session({
+    secret: "It is a secret",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.get("/newSession", (req, res) => {
+    console.log(req.session.id);
+});
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static("css"));

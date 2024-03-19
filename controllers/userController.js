@@ -1,7 +1,10 @@
 import { updateUser, fetchDet } from "../db/user.js";
 
 const signUpRender = (req, res) => {
-    res.render("signUp", {title: "Sign Up"});
+
+    const cookie = req.cookies;
+    console.log(cookie);
+    res.render("signUp", {title: "Sign Up", isLoggedIn: cookie.isLoggedIn});
 }
 
 const addUser = async (req, res) => {
@@ -11,16 +14,18 @@ const addUser = async (req, res) => {
 
     try{
         await updateUser(username, password); 
+        res.cookie("isLoggedIn", "true");
         res.redirect("/");
     } catch(err) {
         console.log(err);
     }
-
-}
+};
 
 const renderLogin = (req, res) => {
-    res.render("login", {title: "Login"});
-}
+    const cookie = req.cookies;
+    console.log(cookie);
+    res.render("login", {title: "Login", isLoggedIn: cookie.isLoggedIn});
+};
 
 const postLogin = async (req, res) => {
     // console.log(req.body);
@@ -42,6 +47,11 @@ const postLogin = async (req, res) => {
     } catch(err) {
         console.log(err);
     }
+};
+
+const logout = (req, res) => {
+    res.cookie("isLoggedIn", "false");
+    res.redirect("/");
 }
 
-export {signUpRender, addUser, renderLogin, postLogin};
+export {signUpRender, addUser, renderLogin, postLogin, logout};
