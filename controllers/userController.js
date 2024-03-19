@@ -2,9 +2,9 @@ import { updateUser, fetchDet } from "../db/user.js";
 
 const signUpRender = (req, res) => {
 
-    const cookie = req.cookies;
+    const cookie = req.session.isLoggedIn;
     console.log(cookie);
-    res.render("signUp", {title: "Sign Up", isLoggedIn: cookie.isLoggedIn});
+    res.render("signUp", {title: "Sign Up", isLoggedIn: cookie});
 }
 
 const addUser = async (req, res) => {
@@ -14,7 +14,7 @@ const addUser = async (req, res) => {
 
     try{
         await updateUser(username, password); 
-        res.cookie("isLoggedIn", "true");
+        req.session.isLoggedIn = "true";
         res.redirect("/");
     } catch(err) {
         console.log(err);
@@ -22,9 +22,9 @@ const addUser = async (req, res) => {
 };
 
 const renderLogin = (req, res) => {
-    const cookie = req.cookies;
+    const cookie = req.session.isLoggedIn;
     console.log(cookie);
-    res.render("login", {title: "Login", isLoggedIn: cookie.isLoggedIn});
+    res.render("login", {title: "Login", isLoggedIn: cookie});
 };
 
 const postLogin = async (req, res) => {
@@ -34,14 +34,14 @@ const postLogin = async (req, res) => {
         const [userDet] = await fetchDet(username);
         if(userDet){
             if(userDet.password === password){
-                res.cookie("isLoggedIn", "true");
+                req.session.isLoggedIn = "true";
                 res.redirect("/");
             } else {
-                res.cookie("isLoggedIn", "InvalidPassword");
+                req.session.isLoggedIn = "InvalidPassword";
                 res.redirect("/login");
             }
         } else {
-            res.cookie("isLoggedIn", "InvalidUsername");
+            req.session.isLoggedIn = "InvalidUsername";
             res.redirect("/login");
         }
     } catch(err) {
@@ -50,8 +50,9 @@ const postLogin = async (req, res) => {
 };
 
 const logout = (req, res) => {
-    res.cookie("isLoggedIn", "false");
+    // req.session.isLoggedIn = "false";
+    req.session.destroy(req.session.id);
     res.redirect("/");
-}
+};
 
 export {signUpRender, addUser, renderLogin, postLogin, logout};
