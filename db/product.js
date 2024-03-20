@@ -9,12 +9,11 @@ const fetchProducts = async () => {
     }
 }
 
-const postData = async (products) => {
-    const {prod_name, price, image} = products;
+const postData = async (prod_name, price, img) => {
     try{
         await pool.query(
             "insert into products (pName, price, image) values (?, ?, ?)", 
-            [prod_name, price, image]);
+            [prod_name, price, img]);
     } catch(err) {
         console.log(err);
     }

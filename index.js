@@ -3,6 +3,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import session from "express-session";
 import bcrpyt, { hash } from "bcrypt";
+import multer from "multer";
 import connectMySql from "express-mysql-session";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
@@ -37,6 +38,17 @@ app.use(session({
     saveUninitialized: false,
     store: sessionStore
 }));
+
+const store = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./assets");
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+})
+
+app.use(multer( {storage: store} ).single("image"));
 
 // app.get("/bcrypt", async (req, res) => {
 //     const password = "password";

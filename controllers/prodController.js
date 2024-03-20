@@ -15,11 +15,12 @@ const editProds = async (req, res) => {
 
 const updateEachProd = async (req, res) => {
     // console.log(req.body);
-    const {prod_name, price, image} = req.body;
+    const {prod_name, price} = req.body;
+    const img = req.file.filename;
     const id = req.params.id;
     // console.log(id, prod_name, price, image);
     try{
-        await updateData(id, prod_name, price, image);
+        await updateData(id, prod_name, price, img);
         res.redirect("/");
     } catch (err) {
         console.log(err);
@@ -32,10 +33,10 @@ const renderAddProd = (req, res) => {
 };
 
 const postAddProd = async (req, res) => {
-    const data = req.body;
-    // console.log(data);
+    const {prod_name, price} = req.body;
+    const img = req.file.filename;
     try{
-        await postData(data);
+        await postData(prod_name, price, img);
         res.redirect("/");
     } catch(err) {
         console.log(err);
