@@ -1,6 +1,7 @@
 import { updateUser, fetchDet } from "../db/user.js";
 import JWT from "jsonwebtoken";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -12,10 +13,11 @@ const signUpRender = (req, res) => {
 const addUser = async (req, res) => {
     // console.log(req.body);
     const {username, password} = req.body;
+    const hashedPass = await bcrypt.hash(password, 10);
     // console.log(username, password);
 
     try{
-        await updateUser(username, password); 
+        await updateUser(username, hashedPass); 
         global.isLoggedIn = "true";
         res.redirect("/");
     } catch(err) {
@@ -33,8 +35,10 @@ const postLogin = async (req, res) => {
     const {username, password} = req.body;
     try{
         const [userDet] = await fetchDet(username);
+        // console.log(userDet.password);
+        const isMatch = bcrypt.compare(userDet.password, password);
         if(userDet){
-            if(userDet.password === password){
+            if(isMatch){
                 const token = JWT.sign(
                     {username},
                     process.env.tokenSignature
