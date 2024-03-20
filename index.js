@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import session from "express-session";
+import bcrpyt, { hash } from "bcrypt";
 import connectMySql from "express-mysql-session";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
@@ -37,10 +38,12 @@ app.use(session({
     store: sessionStore
 }));
 
-// app.get("/newSession", (req, res) => {
-//     console.log(req.session.id);
-//     res.send(req.session.isLoggedIn);
-// });
+// app.get("/bcrypt", async (req, res) => {
+//     const password = "password";
+//     const hashedPass = await bcrpyt.hash(password, 10);
+//     console.log(await bcrpyt.compare("hello", hashedPass));
+//     res.send(hashedPass);
+// });  
 
 app.set("view engine", "ejs");
 app.set("views", "views");
