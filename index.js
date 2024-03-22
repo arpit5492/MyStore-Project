@@ -5,6 +5,7 @@ import session from "express-session";
 import bcrpyt, { hash } from "bcrypt";
 import multer from "multer";
 import connectMySql from "express-mysql-session";
+import { sequelize } from "./config/database.js";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
 import editProd from "./services/editProd.js";
@@ -68,6 +69,17 @@ app.use("/editProd", editProd);
 app.use("/delProd", delProd);
 app.use("/", signUp);
 app.use("/", login);
+
+const main = async() => {
+    try{
+        await sequelize.authenticate();
+        console.log("Database connected succefully!!");
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+main();
 
 app.listen(port, () => {
     console.log(`Server is running on: http://localhost:${port}`);
