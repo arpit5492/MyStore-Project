@@ -27,19 +27,26 @@ const editProds = async (req, res) => {
     }
 };
 
-// const updateEachProd = async (req, res) => {
-//     // console.log(req.body);
-//     const {prod_name, price} = req.body;
-//     const img = req.file.filename;
-//     const id = req.params.id;
-//     // console.log(id, prod_name, price, image);
-//     try{
-//         await updateData(id, prod_name, price, img);
-//         res.redirect("/");
-//     } catch (err) {
-//         console.log(err);
-//     }
-// };
+const updateEachProd = async (req, res) => {
+    // console.log(req.body);
+    const {prod_name, price} = req.body;
+    const img = req.file.filename;
+    const id = req.params.id;
+    // console.log(id, prod_name, price, image);
+    try{
+        await Product.update({
+            pName: prod_name,
+            price: price,
+            image: img
+        },
+        {where: {id: id}}
+        );
+        console.log("Product updated");
+        res.redirect("/");
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 const renderAddProd = (req, res) => {
     // console.log(cookie);
@@ -71,4 +78,4 @@ const postAddProd = async (req, res) => {
 //     }
 // };
 
-export {getAllProds, editProds, renderAddProd, postAddProd /*updateEachProd*/ /*delProd*/};
+export {getAllProds, editProds, renderAddProd, postAddProd, updateEachProd /*delProd*/};
