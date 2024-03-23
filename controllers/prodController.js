@@ -1,4 +1,4 @@
-import {fetchProducts, postData, updateData, delData} from "../db/product.js";
+// import {fetchProducts, postData, updateData, delData} from "../db/product.js";
 
 // getting all the products
 const getAllProds = async (req, res) => {

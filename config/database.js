@@ -8,7 +8,7 @@ const sequelize = new Sequelize({
     dialect: "mysql",
     host: process.env.host,
     port: process.env.port,
-    database: process.env.database,
+    database: process.env.seqDatabase,
     password: process.env.password,
     username: process.env.user,
     pool: {

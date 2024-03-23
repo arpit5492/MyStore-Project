@@ -6,6 +6,8 @@ import bcrpyt, { hash } from "bcrypt";
 import multer from "multer";
 import connectMySql from "express-mysql-session";
 import { sequelize } from "./config/database.js";
+import { User } from "./db/user.js";
+import { Product } from "./db/product.js";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
 import editProd from "./services/editProd.js";
@@ -74,6 +76,9 @@ const main = async() => {
     try{
         await sequelize.authenticate();
         console.log("Database connected succefully!!");
+        await User.sync();
+        await Product.sync();
+        console.log("Tables created");
     } catch(err) {
         console.log(err);
     }
@@ -81,6 +86,8 @@ const main = async() => {
 
 main();
 
-app.listen(port, () => {
-    console.log(`Server is running on: http://localhost:${port}`);
+sequelize.sync().then(() => {
+    app.listen(port, () => {
+        console.log(`Server is running on: http://localhost:${port}`);
+    });
 });
