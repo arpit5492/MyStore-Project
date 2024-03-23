@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import session from "express-session";
 import bcrpyt, { hash } from "bcrypt";
 import multer from "multer";
-import sequelizeMysql from "connect-session-sequelize";
+import mysqlSequelize from "connect-session-sequelize";
 import { sequelize } from "./config/database.js";
 import { User } from "./db/user.js";
 import { Product } from "./db/product.js";
@@ -20,9 +20,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-const sequelizeStore = sequelizeMysql(session.Store);
+const SequelizeStore = mysqlSequelize(session.Store);
 
-const sessionStore = new sequelizeStore({
+const sessionStore = new SequelizeStore({
     db: sequelize
 });
 

@@ -42,18 +42,20 @@ const postLogin = async (req, res) => {
         const userDet = await User.findOne({where: {username: username}});
         console.log(JSON.stringify(userDet, null, 2));
         // console.log(userDet.password);
-        const isMatch = bcrypt.compare(userDet.password, password);
-        if(userDet){
-            if(isMatch){
-                const token = JWT.sign(
-                    {username},
-                    process.env.tokenSignature
-                )
-                req.session.token = token;
-                res.redirect("/");
-            } else {
-                res.redirect("/login");
-            }
+        const isMatch = bcrypt.compareSync(password, userDet.password);
+        console.log(isMatch);
+
+        if(userDet == null){
+            console.log("Invalid username");
+            res.redirect("/login");
+        }
+        if(isMatch){
+            const token = JWT.sign(
+                {username},
+                process.env.tokenSignature
+            );
+            req.session.token = token;
+            res.redirect("/");
         } else {
             res.redirect("/login");
         }
