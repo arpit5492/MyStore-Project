@@ -1,4 +1,3 @@
-// import {fetchProducts, postData, updateData, delData} from "../db/product.js";
 import { Product } from "../db/product.js";
 
 // getting all the products
@@ -12,6 +11,7 @@ const getAllProds = async (req, res) => {
     }
 };
 
+//Showing the edit product page
 const editProds = async (req, res) => {
     try{
         const product = await Product.findByPk(req.params.id);
@@ -27,6 +27,7 @@ const editProds = async (req, res) => {
     }
 };
 
+// Update each product function
 const updateEachProd = async (req, res) => {
     // console.log(req.body);
     const {prod_name, price} = req.body;
@@ -48,6 +49,7 @@ const updateEachProd = async (req, res) => {
     }
 };
 
+// Showing Add product page
 const renderAddProd = (req, res) => {
     // console.log(cookie);
     res.render("addProd", {title: "Add Product", isLoggedIn: global.isLoggedIn});
@@ -62,18 +64,21 @@ const postAddProd = async (req, res) => {
             price: price,
             image: img
         });
+        console.log("Product added successfully!!");
         res.redirect("/");
     } catch(err) {
         console.log(err);
     }
 };
 
+// Function for deleting a product
 const delProd = async (req, res) => {
     const id = req.params.id;
     try{
         await Product.destroy(
             {where: {id: id}}
         )
+        console.log("Product deleted successfully!!");
         res.redirect("/");
     } catch(err) {
         console.log(err);

@@ -1,4 +1,4 @@
-import { DataTypes, TableHints } from "sequelize";
+import { DataTypes} from "sequelize";
 import { sequelize } from "../config/database.js";
 
 const Product = sequelize.define("product", {
