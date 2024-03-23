@@ -68,14 +68,16 @@ const postAddProd = async (req, res) => {
     }
 };
 
-// const delProd = async (req, res) => {
-//     const id = req.params.id;
-//     try{
-//         await delData(id);
-//         res.redirect("/");
-//     } catch(err) {
-//         console.log(err);
-//     }
-// };
+const delProd = async (req, res) => {
+    const id = req.params.id;
+    try{
+        await Product.destroy(
+            {where: {id: id}}
+        )
+        res.redirect("/");
+    } catch(err) {
+        console.log(err);
+    }
+};
 
-export {getAllProds, editProds, renderAddProd, postAddProd, updateEachProd /*delProd*/};
+export {getAllProds, editProds, renderAddProd, postAddProd, updateEachProd, delProd};
