@@ -4,7 +4,10 @@ import dotenv from "dotenv";
 import session from "express-session";
 import bcrpyt, { hash } from "bcrypt";
 import multer from "multer";
-import connectMySql from "express-mysql-session";
+import sequelizeMysql from "connect-session-sequelize";
+import { sequelize } from "./config/database.js";
+import { User } from "./db/user.js";
+import { Product } from "./db/product.js";
 import home from "./services/home.js";
 import addProd from "./services/addProd.js";
 import editProd from "./services/editProd.js";
@@ -17,19 +20,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-const MySQLStore = connectMySql(session);
+const sequelizeStore = sequelizeMysql(session.Store);
 
-const obj = {
-    connectionLimit: 10,
-    host: process.env.host,
-    port: process.env.port,
-    user: process.env.user,
-    password: process.env.password,
-    database: process.env.database,
-    createDatabaseTable: true // Automatically creates a table named as "sessions"
-}
+const sessionStore = new sequelizeStore({
+    db: sequelize
+});
 
-const sessionStore = new MySQLStore(obj);
+sessionStore.sync();
 
 //Middleware functions
 app.use(session({
@@ -69,6 +66,22 @@ app.use("/delProd", delProd);
 app.use("/", signUp);
 app.use("/", login);
 
-app.listen(port, () => {
-    console.log(`Server is running on: http://localhost:${port}`);
+const main = async() => {
+    try{
+        await sequelize.authenticate();
+        console.log("Database connected succefully!!");
+        await User.sync();
+        await Product.sync();
+        console.log("Tables created");
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+main();
+
+sequelize.sync().then(() => {
+    app.listen(port, () => {
+        console.log(`Server is running on: http://localhost:${port}`);
+    });
 });
