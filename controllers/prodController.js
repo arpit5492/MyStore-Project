@@ -12,12 +12,20 @@ const getAllProds = async (req, res) => {
     }
 };
 
-// const editProds = async (req, res) => {
-//     const [products] = await fetchProducts();
-//     // console.log(products);
-//     // console.log(cookie);
-//     res.render("editProd", {title: "Edit Product", prod: products, isLoggedIn: global.isLoggedIn});
-// };
+const editProds = async (req, res) => {
+    try{
+        const product = await Product.findByPk(req.params.id);
+        console.log(JSON.stringify(product, null, 2));
+        if(product){
+            res.render("editProd", {title: "Edit Product", prod: product, isLoggedIn: global.isLoggedIn});
+        } else {
+            res.redirect("/");
+        }
+        // console.log(cookie);
+    } catch(err) {
+        console.log(err);
+    }
+};
 
 // const updateEachProd = async (req, res) => {
 //     // console.log(req.body);
@@ -63,4 +71,4 @@ const postAddProd = async (req, res) => {
 //     }
 // };
 
-export {getAllProds, /*editProds*/ renderAddProd, postAddProd /*updateEachProd*/ /*delProd*/};
+export {getAllProds, editProds, renderAddProd, postAddProd /*updateEachProd*/ /*delProd*/};
